@@ -1,7 +1,7 @@
 [project]
-name = "project2"
+name = "waypoint"
 version = "0.1.0"
-description = "Add your description here"
+description = "Finding the shortest flight combination between two airports."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
