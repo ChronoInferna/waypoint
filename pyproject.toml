@@ -4,6 +4,15 @@ version = "0.1.0"
 description = "Finding the shortest flight combination between two airports."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
+
+[dependency-groups]
+dev = [
     "pytest>=8.4.2",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["waypoint"]
