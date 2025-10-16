@@ -1,5 +1,5 @@
 import csv
-from preprocessing import convert_to_graph
+from waypoint import preprocessing
 
 
 def test_convert_to_graph(tmp_path):
@@ -32,11 +32,27 @@ def test_convert_to_graph(tmp_path):
             }
         )
 
-    graph = convert_to_graph(file_path)
+    graph = preprocessing.convert_to_graph(file_path)
 
     expected = {
         "A": [("B", "100"), ("C", "200")],
         "B": [("C", "150")],
     }
+
+    assert graph == expected
+
+
+def test_convert_to_graph_empty_file(tmp_path):
+    file_path = tmp_path / "empty_flights.csv"
+    with open(file_path, "w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
+        )
+        writer.writeheader()
+
+    graph = preprocessing.convert_to_graph(file_path)
+
+    expected = {}
 
     assert graph == expected
