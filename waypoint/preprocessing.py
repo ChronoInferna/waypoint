@@ -4,11 +4,14 @@ import csv
 def convert_to_graph(file_path):
     graph = {}
     with open(file_path) as file:
-        reader = csv.reader(file)
+        reader = csv.DictReader(file)
         for row in reader:
-            # We want ORIGIN_AIRPORT_ID, DEST_AIRPORT_ID and ACTUAL ELAPSED TIME
-            origin, dest, time = row[5], row[8], row[11]
+            origin, dest, time = (
+                row["ORIGIN_AIRPORT_ID"],
+                row["DEST_AIRPORT_ID"],
+                row["ACTUAL_ELAPSED_TIME"],
+            )
             if origin not in graph:
                 graph[origin] = []
-            graph[dest].append((origin, int(time)))
+            graph[origin].append((dest, time))
     return graph
