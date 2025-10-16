@@ -1,14 +1,8 @@
-from pprint import pprint
+from preprocessing import convert_to_graph
 
 
 def main():
-    data = {
-        "name": "Alice",
-        "age": 30,
-        "city": "New York",
-        "hobbies": ["reading", "traveling", "swimming"],
-    }
-    pprint(data)
+    convert_to_graph("../data/data.csv")
 
 
 if __name__ == "__main__":
