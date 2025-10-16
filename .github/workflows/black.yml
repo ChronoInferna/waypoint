@@ -1,4 +1,4 @@
-name: Auto Black Formatter
+name: Auto format
 
 on: [push]
 
