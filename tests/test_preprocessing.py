@@ -1,5 +1,5 @@
 import csv
-from waypoint import preprocessing
+import preprocessing
 
 
 def test_convert_to_graph(tmp_path):
