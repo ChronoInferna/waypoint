@@ -2,7 +2,7 @@ import csv
 import waypoint.preprocessing as preprocessing
 
 
-def test_convert_to_graph(tmp_path):
+def test_file_to_graph(tmp_path):
     file_path = tmp_path / "flights.csv"
     with open(file_path, "w", newline="") as f:
         writer = csv.DictWriter(
@@ -42,7 +42,7 @@ def test_convert_to_graph(tmp_path):
     assert graph == expected
 
 
-def test_convert_to_graph_empty_file(tmp_path):
+def test_file_to_graph_empty_graph(tmp_path):
     file_path = tmp_path / "empty_flights.csv"
     with open(file_path, "w", newline="") as f:
         writer = csv.DictWriter(

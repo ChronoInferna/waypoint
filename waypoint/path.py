@@ -3,5 +3,5 @@ from dataclasses import dataclass
 
 @dataclass
 class Path:
-    flights: dict[str, str]
+    flights: dict[int, int]
     distance: float
