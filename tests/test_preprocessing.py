@@ -32,7 +32,7 @@ def test_convert_to_graph(tmp_path):
             }
         )
 
-    graph = preprocessing.convert_to_graph(file_path)
+    graph = preprocessing.file_to_graph(file_path)
 
     expected = {
         "A": [("B", "100"), ("C", "200")],
@@ -51,7 +51,7 @@ def test_convert_to_graph_empty_file(tmp_path):
         )
         writer.writeheader()
 
-    graph = preprocessing.convert_to_graph(file_path)
+    graph = preprocessing.file_to_graph(file_path)
 
     expected = {}
 
