@@ -1,7 +1,7 @@
 import csv
 
 
-def convert_to_graph(file_path):
+def file_to_graph(file_path) -> dict[int, list[tuple[int, float]]]:
     graph = {}
     with open(file_path) as file:
         reader = csv.DictReader(file)
