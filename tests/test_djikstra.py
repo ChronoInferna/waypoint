@@ -1,0 +1,26 @@
+import pytest
+
+from waypoint.algorithms.djikstra import djikstra
+
+
+@pytest.mark.xfail
+def test_djikstra():
+    graph = {
+        100: {"200": 1, "300": 4},
+        200: {"300": 2, "400": 5},
+        300: {"400": 1},
+        400: {},
+    }
+    start = 100
+    end = 400
+    expected_path = [100, 200, 300, 400]
+    expected_cost = 4
+
+    res = djikstra(graph, start, end)
+
+    assert (
+        res.flights == expected_path
+    ), f"Expected path {expected_path}, but got {res.flights}"
+    assert (
+        res.distance == expected_cost
+    ), f"Expected cost {expected_cost}, but got {res.distance}"
