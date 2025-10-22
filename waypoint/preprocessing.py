@@ -11,6 +11,8 @@ def file_to_graph(file_path) -> dict[int, list[tuple[int, float]]]:
                 row["DEST_AIRPORT_ID"],
                 row["ACTUAL_ELAPSED_TIME"],
             )
+            if not origin or not dest or not time:
+                continue
             if origin not in graph:
                 graph[origin] = []
             graph[origin].append((dest, time))
