@@ -56,3 +56,50 @@ def test_file_to_graph_empty_graph(tmp_path):
     expected = {}
 
     assert graph == expected
+
+
+def test_file_to_airports(tmp_path):
+    file_path = tmp_path / "airports.csv"
+    with open(file_path, "w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["AIRPORT_ID", "AIRPORT_NAME"],
+        )
+        writer.writeheader()
+        writer.writerow(
+            {
+                "AIRPORT_ID": "10000",
+                "AIRPORT_NAME": "Airport A",
+            }
+        )
+        writer.writerow(
+            {
+                "AIRPORT_ID": "20000",
+                "AIRPORT_NAME": "Airport B",
+            }
+        )
+
+    airports = preprocessing.file_to_airports(file_path)
+
+    expected = {
+        "10000": "Airport A",
+        "20000": "Airport B",
+    }
+
+    assert airports == expected
+
+
+def test_file_to_airports_empty(tmp_path):
+    file_path = tmp_path / "empty_airports.csv"
+    with open(file_path, "w", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["AIRPORT_ID", "AIRPORT_NAME"],
+        )
+        writer.writeheader()
+
+    airports = preprocessing.file_to_airports(file_path)
+
+    expected = {}
+
+    assert airports == expected
