@@ -1,4 +1,4 @@
-from ..path import Path
+from waypoint.path import Path
 
 
 def djikstra(
