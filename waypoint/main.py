@@ -1,6 +1,7 @@
 from preprocessing import file_to_graph, file_to_airports
 from algorithms.djikstra import djikstra
 from algorithms.bfs import bfs
+from algorithms.a_star import a_star
 
 from pprint import pprint
 
@@ -11,6 +12,7 @@ def main():
     airports = file_to_airports("../data/airports.csv")
     # djikstra(graph)
     # bfs(graph)
+    # a_star(graph)
 
 
 if __name__ == "__main__":
