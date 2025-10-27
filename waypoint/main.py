@@ -5,7 +5,7 @@ from pprint import pprint
 
 
 def main():
-    pass
+    ...
     # graph = file_to_graph("../data/data.csv")
     # pprint(graph)
     # airports = file_to_airports("../data/airports.csv")
