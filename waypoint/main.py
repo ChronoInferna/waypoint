@@ -5,9 +5,10 @@ from pprint import pprint
 
 
 def main():
-    pprint(file_to_graph("../data/data.csv"))
     graph = file_to_graph("../data/data.csv")
+    pprint(graph)
     airports = file_to_airports("../data/airports.csv")
+    pprint(airports)
     # djikstra.djikstra(graph)
     # bfs.bfs(graph)
     # a_star.a_star(graph)
