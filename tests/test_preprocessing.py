@@ -1,105 +1,107 @@
+import pytest
+import tempfile
+import os
 import csv
-import waypoint.preprocessing as preprocessing
+from waypoint.preprocessing import file_to_graph, file_to_airports
 
 
-def test_file_to_graph(tmp_path):
-    file_path = tmp_path / "flights.csv"
-    with open(file_path, "w", newline="") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
-        )
-        writer.writeheader()
-        writer.writerow(
-            {
-                "ORIGIN_AIRPORT_ID": "A",
-                "DEST_AIRPORT_ID": "B",
-                "ACTUAL_ELAPSED_TIME": "100",
-            }
-        )
-        writer.writerow(
-            {
-                "ORIGIN_AIRPORT_ID": "A",
-                "DEST_AIRPORT_ID": "C",
-                "ACTUAL_ELAPSED_TIME": "200",
-            }
-        )
-        writer.writerow(
-            {
-                "ORIGIN_AIRPORT_ID": "B",
-                "DEST_AIRPORT_ID": "C",
-                "ACTUAL_ELAPSED_TIME": "150",
-            }
-        )
+@pytest.fixture
+def temp_csv():
+    """Fixture to create and clean up a temporary CSV file."""
+    files = []
 
-    graph = preprocessing.file_to_graph(file_path)
+    def _create_temp_csv(headers, rows):
+        temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w", newline="")
+        files.append(temp_file.name)
+        with temp_file as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+            writer.writerows(rows)
+        return temp_file.name
 
-    expected = {
-        "A": [("B", "100"), ("C", "200")],
-        "B": [("C", "150")],
-    }
+    yield _create_temp_csv
 
-    assert graph == expected
+    for file in files:
+        os.unlink(file)
 
 
-def test_file_to_graph_empty_graph(tmp_path):
-    file_path = tmp_path / "empty_flights.csv"
-    with open(file_path, "w", newline="") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
-        )
-        writer.writeheader()
-
-    graph = preprocessing.file_to_graph(file_path)
-
-    expected = {}
-
-    assert graph == expected
-
-
-def test_file_to_airports(tmp_path):
-    file_path = tmp_path / "airports.csv"
-    with open(file_path, "w", newline="") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["AIRPORT_ID", "AIRPORT_NAME"],
-        )
-        writer.writeheader()
-        writer.writerow(
-            {
-                "AIRPORT_ID": "10000",
-                "AIRPORT_NAME": "Airport A",
-            }
-        )
-        writer.writerow(
-            {
-                "AIRPORT_ID": "20000",
-                "AIRPORT_NAME": "Airport B",
-            }
-        )
-
-    airports = preprocessing.file_to_airports(file_path)
-
-    expected = {
-        "10000": "Airport A",
-        "20000": "Airport B",
-    }
-
-    assert airports == expected
+# Tests for file_to_graph
+@pytest.mark.parametrize(
+    "headers,rows,expected",
+    [
+        # Valid input
+        (
+            ["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
+            [
+                ["100", "200", "50"],
+                ["200", "300", "30"],
+                ["100", "300", "70"],
+            ],
+            {"100": [("200", "50"), ("300", "70")], "200": [("300", "30")]},
+        ),
+        # Empty file
+        (
+            ["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
+            [],
+            {},
+        ),
+        # Missing columns
+        (
+            ["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID"],
+            [["100", "200"]],
+            KeyError,
+        ),
+        # Invalid data
+        (
+            ["ORIGIN_AIRPORT_ID", "DEST_AIRPORT_ID", "ACTUAL_ELAPSED_TIME"],
+            [["100", "", "50"], ["", "300", "30"]],
+            {},
+        ),
+    ],
+)
+def test_file_to_graph(headers, rows, expected, temp_csv):
+    file_path = temp_csv(headers, rows)
+    if isinstance(expected, dict):
+        assert file_to_graph(file_path) == expected
+    else:
+        with pytest.raises(expected):
+            file_to_graph(file_path)
 
 
-def test_file_to_airports_empty(tmp_path):
-    file_path = tmp_path / "empty_airports.csv"
-    with open(file_path, "w", newline="") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["AIRPORT_ID", "AIRPORT_NAME"],
-        )
-        writer.writeheader()
-
-    airports = preprocessing.file_to_airports(file_path)
-
-    expected = {}
-
-    assert airports == expected
+# Tests for file_to_airports
+@pytest.mark.parametrize(
+    "headers,rows,expected",
+    [
+        # Valid input
+        (
+            ["AIRPORT_ID", "AIRPORT_NAME"],
+            [["100", "Airport A"], ["200", "Airport B"]],
+            {"100": "Airport A", "200": "Airport B"},
+        ),
+        # Empty file
+        (
+            ["AIRPORT_ID", "AIRPORT_NAME"],
+            [],
+            {},
+        ),
+        # Missing columns
+        (
+            ["AIRPORT_ID"],
+            [["100"]],
+            KeyError,
+        ),
+        # Invalid data
+        (
+            ["AIRPORT_ID", "AIRPORT_NAME"],
+            [["", "Airport A"], ["200", ""]],
+            {},
+        ),
+    ],
+)
+def test_file_to_airports(headers, rows, expected, temp_csv):
+    file_path = temp_csv(headers, rows)
+    if isinstance(expected, dict):
+        assert file_to_airports(file_path) == expected
+    else:
+        with pytest.raises(expected):
+            file_to_airports(file_path)
