@@ -1,7 +1,7 @@
 from waypoint.path import Path
 
 
-def bfs(
+def a_star(
     graph: dict[int, list[tuple[int, float]]], start: int, destination: int
 ) -> Path:
-    raise NotImplementedError("The BFS algorithm is not yet implemented.")
+    raise NotImplementedError("The A* algorithm is not yet implemented.")
