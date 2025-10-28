@@ -48,14 +48,12 @@ def multiple_paths_graph():
 algorithm_parametrize = pytest.mark.parametrize(
     "algorithm",
     [
-        pytest.param(bfs.bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
+        pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
         pytest.param(
-            djikstra.djikstra,
+            djikstra,
             marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
         ),
-        pytest.param(
-            a_star.a_star, marks=pytest.mark.xfail(reason="A* not implemented")
-        ),
+        pytest.param(a_star, marks=pytest.mark.xfail(reason="A* not implemented")),
     ],
 )
 
