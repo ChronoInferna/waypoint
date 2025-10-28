@@ -15,8 +15,9 @@ def file_to_graph(file_path) -> dict[int, list[tuple[int, float]]]:
             if not origin or not dest or not time:
                 continue
             if origin not in graph:
-                graph[origin] = []
-            graph[origin].append((dest, time))
+                graph[origin] = {}
+            # TODO take lowest time if multiple flights exist between two airports
+            graph[origin][dest] = float(time)
     return graph
 
 
