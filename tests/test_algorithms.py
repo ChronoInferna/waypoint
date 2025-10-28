@@ -3,13 +3,12 @@ from waypoint.algorithms import bfs, djikstra, a_star
 from waypoint.path import Path
 
 
-# Fixtures for common test graphs
 @pytest.fixture
 def simple_graph():
     return {
-        100: {"200": 1, "300": 4},
-        200: {"300": 2, "400": 5},
-        300: {"400": 1},
+        100: {"200": 1.0, "300": 4.0},
+        200: {"300": 2.0, "400": 5.0},
+        300: {"400": 1.0},
         400: {},
     }
 
@@ -17,9 +16,9 @@ def simple_graph():
 @pytest.fixture
 def no_path_graph():
     return {
-        100: {"200": 1},
+        100: {"200": 1.0},
         200: {},
-        300: {"400": 1},
+        300: {"400": 1.0},
         400: {},
     }
 
@@ -27,9 +26,9 @@ def no_path_graph():
 @pytest.fixture
 def cyclic_graph():
     return {
-        100: {"200": 1, "300": 2},
-        200: {"300": 3, "100": 1},
-        300: {"100": 2, "400": 4},
+        100: {"200": 1.0, "300": 2.0},
+        200: {"300": 3.0, "100": 1.0},
+        300: {"100": 2.0, "400": 4.0},
         400: {},
     }
 
@@ -37,9 +36,9 @@ def cyclic_graph():
 @pytest.fixture
 def multiple_paths_graph():
     return {
-        100: {"200": 1, "300": 2},
-        200: {"400": 5},
-        300: {"400": 2},
+        100: {"200": 1.0, "300": 2.0},
+        200: {"400": 5.0},
+        300: {"400": 2.0},
         400: {},
     }
 
