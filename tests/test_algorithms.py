@@ -50,7 +50,7 @@ algorithm_parametrize = pytest.mark.parametrize(
         pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
         pytest.param(
             djikstra,
-            marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
+            # marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
         ),
         pytest.param(a_star, marks=pytest.mark.xfail(reason="A* not implemented")),
     ],
