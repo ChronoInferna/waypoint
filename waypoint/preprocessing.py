@@ -1,7 +1,7 @@
 import csv
 
 
-def file_to_graph(file_path) -> dict[int, list[tuple[int, float]]]:
+def file_to_graph(file_path) -> dict[int, dict[int, float]]:
     """Parses a CSV file containing flight data and returns a graph representation as an adjacency list."""
     graph = {}
     with open(file_path) as file:
@@ -16,8 +16,9 @@ def file_to_graph(file_path) -> dict[int, list[tuple[int, float]]]:
                 continue
             if origin not in graph:
                 graph[origin] = {}
-            # TODO take lowest time if multiple flights exist between two airports
-            graph[origin][dest] = float(time)
+            graph[origin][dest] = min(
+                float(time), graph[origin].get(dest, float("inf"))
+            )
     return graph
 
 
