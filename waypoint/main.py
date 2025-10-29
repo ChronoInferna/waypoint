@@ -1,5 +1,5 @@
-from preprocessing import file_to_graph, file_to_airports
-from algorithms import djikstra, bfs, a_star
+from waypoint.preprocessing import file_to_graph, file_to_airports
+from waypoint.algorithms import djikstra, bfs, a_star
 
 from pprint import pprint
 
