@@ -135,7 +135,7 @@ class TestPerformance:
     @pytest.fixture
     def large_graph(self):
         # Create a large graph with 1000 nodes
-        return {i: {str(i + 1): 1} if i < 1000 else {} for i in range(100, 1101)}
+        return {i: {(i + 1): 1} if i < 1000 else {} for i in range(100, 1101)}
 
     def test_large_graph_performance(self, algorithm, large_graph):
         result = algorithm(large_graph, 100, 1000)
