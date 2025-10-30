@@ -2,9 +2,7 @@ from waypoint.path import Path
 import heapq
 
 
-def djikstra(
-    graph: dict[int, dict[int, float]]  , start: int, destination: int
-) -> Path:
+def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -> Path:
 
     unvisited = {
         n: float("inf") for n in graph
@@ -17,7 +15,9 @@ def djikstra(
         minimum = min(unvisited, key=unvisited.get())  # Start from lowest weight
         current_distance = unvisited[minimum]
 
-        for neighbor, weight in graph.get(minimum, []).items():  # Start from lowest weight
+        for neighbor, weight in graph.get(
+            minimum, []
+        ).items():  # Start from lowest weight
             if neighbor in visited:
                 continue
 
@@ -26,7 +26,9 @@ def djikstra(
                 unvisited[neighbor] = distance  # Assign total distance to next node
                 previous[neighbor] = minimum  # Assign last node to be predeccesor
 
-        visited[minimum] = current_distance  # Last node is assigned the total distance traveled
+        visited[minimum] = (
+            current_distance  # Last node is assigned the total distance traveled
+        )
         unvisited.pop(minimum)
 
     # Path starts at destination and iterates through predeccessors
