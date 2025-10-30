@@ -37,7 +37,7 @@ def temp_csv():
                 ["200", "300", "30"],
                 ["100", "300", "70"],
             ],
-            {"100": {"200": 50.0, "300": 70.0}, "200": {"300": 30.0}},
+            {100: {200: 50.0, 300: 70.0}, 200: {300: 30.0}},
         ),
         # Empty file
         (
@@ -76,7 +76,7 @@ def test_file_to_graph(headers, rows, expected, temp_csv):
         (
             ["AIRPORT_ID", "AIRPORT_NAME"],
             [["100", "Airport A"], ["200", "Airport B"]],
-            {"100": "Airport A", "200": "Airport B"},
+            {100: "Airport A", 200: "Airport B"},
         ),
         # Empty file
         (
