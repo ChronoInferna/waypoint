@@ -3,6 +3,13 @@ from dataclasses import dataclass
 
 @dataclass
 class Path:
+    """
+    Represents a path consisting of a sequence of flights and the total time taken.
+    Attributes:
+        flights (list[int] | None): A list of flight IDs representing the path. None indicates no path.
+        time (float): The total time taken for the path. Infinite time indicates no path.
+    """
+
     _flights: list[int] | None
     _time: float
 
@@ -16,6 +23,8 @@ class Path:
         """Creates a path from a list of flights and an optional time."""
         if time < 0:
             raise ValueError("Time must be non-negative")
+        elif time == float("inf"):
+            return cls.empty()
         return cls(_flights=flights, _time=time)
 
     def __post_init__(self):
@@ -40,6 +49,8 @@ class Path:
 
     @time.setter
     def time(self, value: float):
-        if value != float("inf") and value < 0:
+        if value == float("inf"):
+            self._flights = None
+        if value < 0:
             raise ValueError("Time must be non-negative")
         self._time = value
