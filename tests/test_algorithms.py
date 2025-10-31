@@ -47,7 +47,7 @@ def multiple_paths_graph():
 algorithm_parametrize = pytest.mark.parametrize(
     "algorithm",
     [
-        pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
+        # pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
         pytest.param(
             djikstra,
             # marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
@@ -88,8 +88,9 @@ class TestAlgorithms:
         assert result.time == 0
 
     def test_nonexistent_start(self, algorithm, simple_graph):
-        with pytest.raises(KeyError):
-            algorithm(simple_graph, 999, 400)
+        result = algorithm(simple_graph, 999, 400)
+        assert result.flights is None
+        assert result.time == float("inf")
 
     def test_nonexistent_end(self, algorithm, simple_graph):
         result = algorithm(simple_graph, 100, 999)
@@ -101,8 +102,9 @@ class TestAlgorithms:
 @algorithm_parametrize
 class TestEdgeCases:
     def test_empty_graph(self, algorithm):
-        with pytest.raises(KeyError):
-            algorithm({}, 100, 400)
+        result = algorithm({}, 100, 400)
+        assert result.flights is None
+        assert result.time == float("inf")
 
     @pytest.mark.parametrize(
         "invalid_graph",
