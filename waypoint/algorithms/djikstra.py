@@ -8,7 +8,7 @@ def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -
     }  # Dict of unvisited nodes, all with infinite weight
     # Probably not best practice to raise KeyError here instead of returning Path with None flights but it's too late to change now
     if start not in graph.keys():
-        return Path(flights=None, time=float("inf"))
+        return Path.empty()
     unvisited[start] = 0  # Start node given weight of 0
     visited = {}
     previous = {}
@@ -37,8 +37,8 @@ def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -
     path = [destination]
     while path[-1] != start:
         if path[-1] not in previous:
-            return Path(flights=None, time=float("inf"))
+            return Path.empty()  # No path found
         path.append(previous[path[-1]])
     path.reverse()  # Reverse list so path is start location to end location
 
-    return Path(flights=path, time=visited[destination])
+    return Path.from_list(path, visited[destination])
