@@ -125,10 +125,8 @@ class TestEdgeCases:
             200: {300: -2},
             300: {},
         }
-        result = algorithm(negative_graph, 100, 300)
-        assert result.flights is not None
-        assert result.flights == [100, 200, 300]
-        assert result.time == -3
+        with pytest.raises(ValueError):
+            algorithm(negative_graph, 100, 300)
 
 
 # Performance Tests
