@@ -37,8 +37,8 @@ def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -
     path = [destination]
     while path[-1] != start:
         if path[-1] not in previous:
-            return Path(flights=None, distance=float("inf"))
+            return Path(flights=None, time=float("inf"))
         path.append(previous[path[-1]])
     path.reverse()  # Reverse list so path is start location to end location
 
-    return Path(flights=path, distance=visited[destination])
+    return Path(flights=path, time=visited[destination])
