@@ -1,6 +1,6 @@
 # waypoint
 
-[![Run pytest](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml/badge.svg)](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml)
+[![Unit Tests](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml/badge.svg)](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml)
 
 Project 2 for COP3530
 
@@ -73,3 +73,4 @@ Contributions and improvements are welcome. Suggested workflow:
 5. Open a pull request with a clear description of changes
 
 Code is automatically formatted using the Black formatter.
+
