@@ -9,7 +9,7 @@ def main():
     # pprint(graph)
     # airports = file_to_airports("../data/airports.csv")
     # pprint(airports)
-    # djikstra(graph, 10000, 10001)
+    pprint(djikstra(graph, 10721, 11953))
     # bfs(graph, 10000, 10001)
     # a_star(graph, 10000, 10001)
 
