@@ -50,7 +50,7 @@ algorithm_parametrize = pytest.mark.parametrize(
         pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
         pytest.param(
             djikstra,
-            marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
+            # marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
         ),
         pytest.param(a_star, marks=pytest.mark.xfail(reason="A* not implemented")),
     ],
@@ -135,7 +135,7 @@ class TestPerformance:
     @pytest.fixture
     def large_graph(self):
         # Create a large graph with 1000 nodes
-        return {i: {str(i + 1): 1} if i < 1000 else {} for i in range(100, 1101)}
+        return {i: {(i + 1): 1} if i < 1000 else {} for i in range(100, 1101)}
 
     def test_large_graph_performance(self, algorithm, large_graph):
         result = algorithm(large_graph, 100, 1000)
