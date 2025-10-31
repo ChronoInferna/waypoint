@@ -6,12 +6,14 @@ from pprint import pprint
 
 def main():
     graph = file_to_graph("../data/data.csv")
-    # pprint(graph)
-    # airports = file_to_airports("../data/airports.csv")
-    # pprint(airports)
-    pprint(djikstra(graph, 10721, 11953))
-    # bfs(graph, 10000, 10001)
-    # a_star(graph, 10000, 10001)
+    airports = file_to_airports("../data/airports.csv")
+
+    path = djikstra(graph, 10721, 11953)
+    if path.flights is None:
+        print("No path found")
+        return
+    for airport_id in path.flights:
+        print(airports[airport_id])
 
 
 if __name__ == "__main__":

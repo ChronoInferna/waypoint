@@ -1,5 +1,4 @@
 from waypoint.path import Path
-import heapq
 
 
 def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -> Path:
@@ -7,8 +6,9 @@ def djikstra(graph: dict[int, dict[int, float]], start: int, destination: int) -
     unvisited = {
         n: float("inf") for n in graph
     }  # Dict of unvisited nodes, all with infinite weight
+    # Probably not best practice to raise KeyError here instead of returning Path with None flights but it's too late to change now
     if start not in graph.keys():
-        raise KeyError
+        return Path(flights=None, time=float("inf"))
     unvisited[start] = 0  # Start node given weight of 0
     visited = {}
     previous = {}
