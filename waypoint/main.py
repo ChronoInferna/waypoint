@@ -1,13 +1,12 @@
 from waypoint.preprocessing import file_to_graph, file_to_airports
-from waypoint.algorithms import djikstra, bfs, a_star
-
-from pprint import pprint
+from waypoint.algorithms import djikstra
 
 
 def main():
     graph = file_to_graph("../data/data.csv")
     airports = file_to_airports("../data/airports.csv")
 
+    # Example: Find path from BOS to MCO
     path = djikstra(graph, 10721, 11953)
     if path.flights is None:
         print("No path found")

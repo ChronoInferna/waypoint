@@ -1,5 +1,5 @@
 import pytest
-from waypoint.algorithms import bfs, djikstra, a_star
+from waypoint.algorithms import djikstra, a_star
 from waypoint.path import Path
 
 
