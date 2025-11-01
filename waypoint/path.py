@@ -37,10 +37,12 @@ class Path:
         # Invariant checks
         if flights is None:
             self._time = float("inf")
-        elif self._time < 0:
+
+        if self._time < 0:
             raise ValueError("Time must be non-negative")
         elif self._time == float("inf"):
             self._flights = None
+
         return self
 
     @property
