@@ -13,25 +13,37 @@ class Path:
     _flights: list[int] | None
     _time: float
 
+    # Initialization is restricted to factory methods only
+    def __new__(cls, *args: object, **kwargs: object):
+        raise TypeError(
+            "Direct instantiation is not allowed. Use class methods to create instances."
+        )
+
     @classmethod
     def empty(cls) -> "Path":
         """Creates an empty path with no flights and infinite time."""
-        return cls(_flights=None, _time=float("inf"))
+        self = super().__new__(cls)
+        self._flights = None
+        self._time = float("inf")
+        return self
 
     @classmethod
-    def from_list(cls, flights: list[int], time: float = 0.0) -> "Path":
+    def from_list(cls, flights: list[int] | None, time: float = 0.0) -> "Path":
         """Creates a path from a list of flights and an optional time."""
-        if time < 0:
-            raise ValueError("Time must be non-negative")
-        elif time == float("inf"):
-            return cls.empty()
-        return cls(_flights=flights, _time=time)
+        self = super().__new__(cls)
+        self._flights = flights
+        self._time = time
 
-    def __post_init__(self):
-        if self._flights is None:
+        # Invariant checks
+        if flights is None:
             self._time = float("inf")
-        elif self._time < 0:
+
+        if self._time < 0:
             raise ValueError("Time must be non-negative")
+        elif self._time == float("inf"):
+            self._flights = None
+
+        return self
 
     @property
     def flights(self) -> list[int] | None:
