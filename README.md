@@ -7,6 +7,7 @@ Project 2 for COP3530
 ---
 
 Table of Contents
+
 - [Overview](#overview)
 - [Features](#features)
 - [Requirements](#requirements)
@@ -55,6 +56,12 @@ Run the script directly (inside waypoint/waypoint):
 uv run main.py
 ```
 
+Run the website (inside waypoint/web):
+
+```bash
+uv run app.py
+```
+
 ## Testing
 
 Run tests in the main directory:
@@ -65,9 +72,10 @@ uv run pytest
 
 ## Repository Structure
 
-- `waypoint/`                     - Source code
-- `data/`                         - Data is small enough to easily include in repo
-- `tests/`                        - Unit tests
+- `waypoint/` - Source code
+- `data/` - Data is small enough to easily include in repo
+- `tests/` - Unit tests
+- `web/` - Web application code
 
 ## Contributing
 
