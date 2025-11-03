@@ -2,7 +2,7 @@
 
 [![Unit Tests](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml/badge.svg)](https://github.com/ChronoInferna/waypoint/actions/workflows/pytest.yml)
 
-Originally created as project 2 for COP3530 in the fall of 2025.
+Originally created as the second project for COP3530 in the fall of 2025.
 
 ---
 
@@ -88,5 +88,6 @@ Contributions and improvements are welcome. Suggested workflow:
 5. Open a pull request with a clear description of changes
 
 Code is automatically formatted using the Black formatter.
+
 
 
