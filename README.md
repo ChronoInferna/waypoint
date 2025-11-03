@@ -81,10 +81,11 @@ uv run pytest
 
 Contributions and improvements are welcome. Suggested workflow:
 
-1. Fork the repository
+1. Clone the main branch
 2. Create a feature branch: `git checkout -b <your-feature>`
 3. Make your changes and add tests where appropriate
 4. Commit and push: `git commit -m "Add feature" && git push origin <your-feature>`
 5. Open a pull request with a clear description of changes
 
 Code is automatically formatted using the Black formatter.
+
