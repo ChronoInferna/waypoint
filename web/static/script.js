@@ -48,8 +48,13 @@ routeBtn.addEventListener("click", async () => {
     if (json.message) output.textContent = json.message;
     else {
       output.textContent =
-        json.flights.map((airport) => `${airport}`).join("\n") +
-        `\nTotal travel time: ${json.time} minutes`;
+        "Route found using Djikstra's Algorithm:\n\n" +
+        json.djikstra.flights.map((airport) => `${airport}`).join("\n") +
+        `\nTotal travel time: ${json.djikstra.time} minutes` +
+        "\n\n" +
+        "Route found using BFS Algorithm:\n\n" +
+        json.bfs.flights.map((airport) => `${airport}`).join("\n") +
+        `\nTotal travel time: ${json.bfs.time} minutes`;
     }
   } catch (err) {
     output.textContent = `Error: ${err.message}`;
