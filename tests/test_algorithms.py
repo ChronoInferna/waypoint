@@ -1,5 +1,5 @@
 import pytest
-from waypoint.algorithms import djikstra, a_star
+from waypoint.algorithms import djikstra, bfs
 from waypoint.path import Path
 
 
@@ -47,12 +47,8 @@ def multiple_paths_graph():
 algorithm_parametrize = pytest.mark.parametrize(
     "algorithm",
     [
-        # pytest.param(bfs, marks=pytest.mark.xfail(reason="BFS not implemented")),
-        pytest.param(
-            djikstra,
-            # marks=pytest.mark.xfail(reason="Dijkstra not implemented"),
-        ),
-        pytest.param(a_star, marks=pytest.mark.xfail(reason="A* not implemented")),
+        pytest.param(djikstra),
+        pytest.param(bfs),
     ],
 )
 
@@ -61,6 +57,13 @@ algorithm_parametrize = pytest.mark.parametrize(
 @algorithm_parametrize
 class TestAlgorithms:
     def test_simple_path(self, algorithm, simple_graph):
+        if algorithm.__name__ == "bfs":
+            # BFS does not consider weights, so the path may differ
+            result = algorithm(simple_graph, 100, 400)
+            assert result.flights is not None
+            assert result.flights[0] == 100
+            assert result.flights[-1] == 400
+            return
         result = algorithm(simple_graph, 100, 400)
         assert isinstance(result, Path)
         assert result.flights == [100, 200, 300, 400]
@@ -78,6 +81,13 @@ class TestAlgorithms:
         assert result.time <= 7  # Maximum possible path length
 
     def test_multiple_paths(self, algorithm, multiple_paths_graph):
+        if algorithm.__name__ == "bfs":
+            # BFS does not consider weights, so the path may differ
+            result = algorithm(multiple_paths_graph, 100, 400)
+            assert result.flights is not None
+            assert result.flights[0] == 100
+            assert result.flights[-1] == 400
+            return
         result = algorithm(multiple_paths_graph, 100, 400)
         assert result.flights == [100, 300, 400]  # Should find shortest path
         assert result.time == 4
