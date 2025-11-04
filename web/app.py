@@ -3,7 +3,7 @@ from typing import cast, TypedDict
 from flask import Flask, render_template, request, jsonify
 
 from waypoint.preprocessing import file_to_graph, file_to_airports
-from waypoint.algorithms import djikstra
+from waypoint.algorithms import djikstra, bfs
 from waypoint.path import Path
 
 app = Flask(__name__)
@@ -33,19 +33,30 @@ def process():
     start = int(data["start"])
     end = int(data["end"])
 
-    path = djikstra(graph, start, end)
+    path1 = djikstra(graph, start, end)
+    path2 = bfs(graph, start, end)
 
-    if path == Path.empty():
+    if path1 == Path.empty() or path2 == Path.empty():
         return jsonify({"message": "No path found."})
 
     return jsonify(
         {
-            "flights": (
-                [airports[airport_id] for airport_id in path.flights]
-                if path.flights is not None
-                else []
-            ),
-            "time": path.time,
+            "djikstra": {
+                "flights": (
+                    [airports[airport_id] for airport_id in path1.flights]
+                    if path1.flights is not None
+                    else []
+                ),
+                "time": path1.time,
+            },
+            "bfs": {
+                "flights": (
+                    [airports[airport_id] for airport_id in path2.flights]
+                    if path2.flights is not None
+                    else []
+                ),
+                "time": path2.time,
+            },
         }
     )
 
