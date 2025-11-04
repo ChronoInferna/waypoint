@@ -28,7 +28,7 @@ class Path:
         return self
 
     @classmethod
-    def from_list(cls, flights: list[int] | None, time: float = 0.0) -> "Path":
+    def from_list(cls, flights: list[int] | None, time: float) -> "Path":
         """Creates a path from a list of flights and an optional time."""
         self = super().__new__(cls)
         self._flights = flights
